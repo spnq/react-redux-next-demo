@@ -1,0 +1,13 @@
+.search {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.seachList {
+	display: flex;
+}
+
+.search button {
+	max-width: 140px;
+}
