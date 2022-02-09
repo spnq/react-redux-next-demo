@@ -14,6 +14,7 @@ import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
 // import useFirebaseAuth from '../hooks/useFirebase';
+
 const LIMIT = 3;
 
 
