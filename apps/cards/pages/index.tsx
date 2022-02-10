@@ -13,7 +13,6 @@ import {ThunkDispatch} from 'redux-thunk';
 import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
-// import useFirebaseAuth from '../hooks/useFirebase';
 
 const LIMIT = 3;
 
@@ -22,15 +21,12 @@ export default function Home (): JSX.Element {
 	const {currentPage} : IPage = useSelector((state: RootState) => state.page);
 	const {current: cards, total} : ICardsState = useSelector((state: RootState) => state.cards);
 	const dispatch = useDispatch();
-	// const { authUser, loading } = useFirebaseAuth();
-	// console.log(authUser)
 
 	return (
 		<div className={styles.App}>
 			<Head>
 				<title>biba</title>
 			</Head>
-			{/* {authUser && loading && console.log(authUser)} */}
 			<Typography variant="h2" component="h2">
 				All Cards
 			</Typography>

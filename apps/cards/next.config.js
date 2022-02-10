@@ -1,5 +1,8 @@
 module.exports = {
 	distDir: 'build',
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 	async rewrites() {
 		return [
 			{
