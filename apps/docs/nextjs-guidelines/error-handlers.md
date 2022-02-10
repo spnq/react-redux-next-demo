@@ -1,6 +1,7 @@
 # Custom Error Handlers
 
 There are several ways to handle error on both Server Side and Client Side.
+Custom error pages will work only on production build, for dev server only stack trace page will be displayed.
 
 ### try-catch block
 
@@ -17,7 +18,7 @@ function Page({statusCode, stars}: {statusCode: number, stars: number}) {
 }
 
 Page.getInitialProps = async () => {
-  
+
 	try{
 		const res = await fetch('https://api.github.com/repos/vercel/next.js');
 		const json = await res.json();
@@ -42,6 +43,7 @@ export default Page;
 ### Custom 404 and 500 pages
 
 Both pages can be customized by creating `500.tsx` and `404.tsx` provided in `pages` directory.
+You can use `getStaticProps` inside this page if you need to fetch data at build time.
 
 ```ts
 // pages/500.tsx
@@ -87,3 +89,5 @@ Error.getInitialProps = ({ res, err } : NextPageContext) => {
 
 export default Error;
 ```
+
+`Error` does not currently support Next.js Data Fetching methods like `getStaticProps` or `getServerSideProps`.
