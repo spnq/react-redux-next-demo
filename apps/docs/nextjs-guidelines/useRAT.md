@@ -1,4 +1,4 @@
-#Next Router API
+# Next Router API
 
 You can listen to different events happening inside the Next.js Router. Here's a list of supported events:
 
@@ -10,7 +10,7 @@ You can listen to different events happening inside the Next.js Router. Here's a
 - `hashChangeStart(url, { shallow })` - Fires when the hash will change but not the page
 - `hashChangeComplete(url, { shallow })` - Fires when the hash has changed but not the page
 
-#useRAT hook
+# useRAT hook
 
 When included in project's `_app.tsx` reacts to every `routeChangeStart`, `routeChangeComplete` and `routeChangeError` with provided callbacks.
 
