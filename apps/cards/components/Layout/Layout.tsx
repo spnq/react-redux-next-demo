@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import {SearchRounded} from '@mui/icons-material';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -11,20 +11,23 @@ import Tooltip from '@mui/material/Tooltip';
 import CssBaseline from '@mui/material/CssBaseline';
 import React, {MouseEvent, useEffect, useState, KeyboardEvent, useMemo} from 'react';
 import Router from 'next/router';
-import {Badge, IconButton, InputAdornment, Paper, Popover, TextField, Switch, createTheme, ThemeProvider} from '@mui/material';
+import {Badge, IconButton, InputAdornment, Paper, Popover, TextField, Switch, createTheme, ThemeProvider, Avatar, Menu, MenuItem} from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
 import {notificationCollection} from '../../firebase';
 import {query, onSnapshot} from 'firebase/firestore';
 import {RootState} from '../../store/store';
 import {setNotifications} from '../../store/notifications/actions';
 import {toggleDarkMode} from '../../store/dark-mode/actions';
-import useFirebaseAuth from '../../hooks/useFirebase';
+import {auth} from '../../firebase';
+import {signOut} from 'firebase/auth';
+import {UserState} from '../../store/user/types';
 
 function Layout({children}: {children: React.ReactNode}) {
 	const notifications = useSelector((state: RootState) => state.notifications);
 	const [anchorEl, setAnchorEl] = useState<EventTarget & Element | null>(null);
+	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const [search, setSearch] = useState('');
-	const {signOutWrapper} = useFirebaseAuth();
+	const userSettings = (useSelector((state: RootState) => state.user) as UserState).settings;
 	const isDarkMode = useSelector((state: RootState) => state.isDarkMode);
 	const dispatch = useDispatch();
 	const theme = useMemo(() =>
@@ -38,6 +41,14 @@ function Layout({children}: {children: React.ReactNode}) {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElUser(event.currentTarget);
+	};
+
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
 	};
 
 	const open = Boolean(anchorEl);
@@ -90,8 +101,7 @@ function Layout({children}: {children: React.ReactNode}) {
 							<Button onClick={() => Router.push({pathname: '/submit-form'})} variant='contained'>CREATE</Button>
 						</Box>
 						<Box sx={{ flexGrow: 1, alignItems: 'center' ,display: { xs: 'none', md: 'flex' } }}>
-							<Button onClick={() => Router.push({pathname: '/login'})} style={{margin: '12px'}} variant='contained'>LOGIN</Button>
-							<Button onClick={signOutWrapper} variant='contained'>SIGN OUT</Button>
+							{!userSettings?.uid && <Button onClick={() => Router.push({pathname: '/login'})} style={{margin: '12px'}} variant='contained'>LOGIN</Button>}
 						</Box>
 
 						<Box>
@@ -118,7 +128,7 @@ function Layout({children}: {children: React.ReactNode}) {
 							<Tooltip title="Notification">
 								<IconButton onClick={handleOpenPopOver} sx={{ p: 0 }}>
 									<Badge badgeContent={notifications.length} color="primary">
-										<MailIcon color="action" />
+										<NotificationsIcon color="action" />
 									</Badge>
 								</IconButton>
 							</Tooltip>
@@ -150,6 +160,36 @@ function Layout({children}: {children: React.ReactNode}) {
 						<Box>
 							<Switch checked={isDarkMode} onChange={handleToggle} />
 						</Box>
+						{userSettings?.uid && <Box sx={{ flexGrow: 0 }}>
+							<Tooltip title="Open settings">
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+									<Avatar alt="Remy Sharp" src={userSettings?.photoURL || ''} />
+								</IconButton>
+							</Tooltip>
+							<Menu
+								sx={{ mt: '45px' }}
+								id="menu-appbar"
+								anchorEl={anchorElUser}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								open={Boolean(anchorElUser)}
+								onClose={handleCloseUserMenu}
+							>
+								<MenuItem onClick={handleCloseUserMenu}>
+									<Typography onClick={() => signOut(auth)} textAlign="center">Sign Out</Typography>
+								</MenuItem>	
+								<MenuItem onClick={handleCloseUserMenu}>
+									<Typography onClick={() => Router.push({pathname: '/update-profile'})} textAlign="center">Profile</Typography>
+								</MenuItem>	
+							</Menu>
+						</Box>}
 					</Toolbar>
 				</Container>
 			</AppBar>

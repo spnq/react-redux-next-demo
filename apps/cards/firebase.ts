@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import {browserSessionPersistence, getAuth} from 'firebase/auth';
 import {collection, CollectionReference, DocumentData, getFirestore} from 'firebase/firestore';
 import {ICard} from './components/CardDisplayList/CardDisplayList';
 import {INotification} from './store/notifications/types';
@@ -14,6 +15,10 @@ const firebaseConfig = {
 };
 
 export const firebase = initializeApp(firebaseConfig);
+
+export const auth = getAuth();
+
+auth.setPersistence(browserSessionPersistence);
 
 const firestore = getFirestore(firebase);
 

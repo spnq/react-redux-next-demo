@@ -8,13 +8,15 @@ import {updateThemeReducer} from './dark-mode/darkModeReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {ActionsType} from '.';
 import {searchReducer} from './search/searchReducer';
+import {userReducer} from './user/userReducer';
 
 const rootReducer = combineReducers({
 	isDarkMode: updateThemeReducer,
 	page: updatePageReducer,
 	notifications: updateNotificationsReducer,
 	cards: cardsReducer,
-	search: searchReducer
+	search: searchReducer,
+	user: userReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>

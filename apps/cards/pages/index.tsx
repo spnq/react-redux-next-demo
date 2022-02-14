@@ -13,6 +13,8 @@ import {ThunkDispatch} from 'redux-thunk';
 import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
+import nookies from 'nookies';
+import {admin} from '../firebase-admin';
 
 const LIMIT = 3;
 
@@ -51,36 +53,52 @@ export default function Home (): JSX.Element {
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-	const store = initializeStore({} as RootState);
-	const { dispatch }: {dispatch: ThunkDispatch<RootState, unknown, ActionsType>} = store;
-	const isFirstRender: boolean = !ctx?.req?.url?.includes('.json') || false;
+	try {
+		const cookies = nookies.get(ctx);
+		const token = await admin.auth().verifyIdToken(cookies.token);
+		const { uid, email } = token;
+		console.log(uid, email);
+		const store = initializeStore({} as RootState);
+		const { dispatch }: {dispatch: ThunkDispatch<RootState, unknown, ActionsType>} = store;
+		const isFirstRender: boolean = !ctx?.req?.url?.includes('.json') || false;
 
-	if (isFirstRender) {
-		await Promise.all(
-			[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards()),dispatch(setDarkMode())]
-		);
-		dispatch(setCurrentPage(1));
-		return {
-			props: {
-				initialReduxState: {
-					page: store.getState().page,
-					cards: store.getState().cards,
-					isDarkMode: store.getState().isDarkMode
+		if (isFirstRender) {
+			await Promise.all(
+				[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards()),dispatch(setDarkMode())]
+			);
+			dispatch(setCurrentPage(1));
+			return {
+				props: {
+					initialReduxState: {
+						page: store.getState().page,
+						cards: store.getState().cards,
+						isDarkMode: store.getState().isDarkMode
+					}
 				}
-			}
-		};
-	} else {
-		await Promise.all(
-			[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards())]
-		);
-		dispatch(setCurrentPage(1));
-		return {
-			props: {
-				initialReduxState: {
-					page: store.getState().page,
-					cards: store.getState().cards,
+			};
+		} else {
+			await Promise.all(
+				[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards())]
+			);
+			dispatch(setCurrentPage(1));
+			return {
+				props: {
+					initialReduxState: {
+						page: store.getState().page,
+						cards: store.getState().cards,
+					}
 				}
-			}
+			};
+		}
+	} catch(e) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/login',
+			},
+			// `as never` is required for correct type inference
+			// by InferGetServerSidePropsType below
+			props: {} as never,
 		};
 	}
 

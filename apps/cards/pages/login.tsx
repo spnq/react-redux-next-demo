@@ -1,29 +1,25 @@
 import {Card, CardContent,Typography, TextField, CardActions, Button} from '@mui/material';
+import {signInWithEmailAndPassword} from 'firebase/auth';
 import Router from 'next/router';
 import React, {FormEvent, useState} from 'react';
-import useFirebaseAuth from '../hooks/useFirebase';
+import {auth} from '../firebase';
 import styles from '../styles/App.module.css';
 
 function Login() {
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-
-	const { signIn } = useFirebaseAuth();
-
 	
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		
-		signIn(email, password)
+
+		signInWithEmailAndPassword(auth, email, password)
 			.then(authUser => {
-				console.log('Loged in');
 				console.log(authUser);
 				Router.push({pathname: '/'});
 			})
 			.catch(error => {
 				console.log(error.message);
 			});
-		console.log({password, email});
 	};
 	return (
 		<div className={styles.App}>

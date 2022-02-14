@@ -1,16 +1,16 @@
+import {createUserWithEmailAndPassword} from 'firebase/auth';
 import React, {FormEvent, useState} from 'react';
-import useFirebaseAuth from '../hooks/useFirebase';
+import {auth} from '../firebase';
 
 function Signup() {
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-	const { create } = useFirebaseAuth();
 
 	
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		
-		create(email, password)
+		createUserWithEmailAndPassword(auth,email, password)
 			.then(authUser => {
 				console.log('Success. The user is created in Firebase');
 				console.log(authUser);
