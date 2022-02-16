@@ -1,29 +1,22 @@
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
-import NProgress from 'nprogress';
 
-export const useRAT = (
-	isActive = true,
-	handleStart = () => NProgress.start(),
-	handleComplete = () => NProgress.done(),
-	handleError = () => NProgress.done()
-) => {
+export function useRAT () {
 	const router = useRouter();
 
 	useEffect(() => {
+		// https://git.rakuten-it.com/projects/DUI/repos/dynamic-ui/browse/components-library/utils/tracking/index.ts#4
+		const handleComplete = () => {
+			console.log('useRAT', document.location.href);
+		}; //resetRAL
 
-		if (isActive) {
-			router.events.on('routeChangeStart', handleStart);
-			router.events.on('routeChangeComplete', handleComplete);
-			router.events.on('routeChangeError', handleError);
+		router.events.on(
+			'routeChangeComplete',
+			handleComplete
+		);
 
-			return () => {
-				router.events.off('routeChangeStart', handleStart);
-				router.events.off('routeChangeComplete', handleComplete);
-				router.events.off('routeChangeError', handleError);
-			};
-		}
-	}, [router, handleStart, handleComplete, handleError, isActive]);
-
-	return [router.route];
-};
+		return () => {
+			router.events.off('routeChangeComplete', handleComplete);
+		};
+	}, [router]);
+}
