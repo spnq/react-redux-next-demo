@@ -25,6 +25,7 @@ export default function SubmitForm (): JSX.Element {
 		<div style={{
 			maxHeight: '1200px'
 		}}>
+			{typeof window === 'undefined' ? '' : console.log('submit-form')}
 			<Head>
 				<title>boba</title>
 				<meta property="og:title" content="Page title" key="title" />
