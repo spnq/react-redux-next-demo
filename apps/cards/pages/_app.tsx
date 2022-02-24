@@ -6,25 +6,22 @@ import Layout from '../components/Layout/Layout';
 import {useStore} from '../store/store';
 import {useLoader} from '../../utils/useLoader';
 import Head from 'next/head';
-import {useRAT} from '../../utils/useRAT';
-import RATProvider from '../components/RATProvider/RATProvider';
+import {updateRatIfNeeded} from '../../utils/updateRatIfNeeded';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const store = useStore(pageProps.initialReduxState);
 
 	useLoader();
-	useRAT();
+	updateRatIfNeeded();
 
 	return (
 		<Provider store={store}>
-			<RATProvider>
-				<Layout>
-					<Head>
-						<link rel="icon" type="image/png" href="https://nextjs.org/static/favicon/favicon.ico" />
-					</Head>
-					<Component {...pageProps} />
-				</Layout>
-			</RATProvider>
+			<Layout>
+				<Head>
+					<link rel="icon" type="image/png" href="https://nextjs.org/static/favicon/favicon.ico" />
+				</Head>
+				<Component {...pageProps} />
+			</Layout>
 		</Provider>
 	);
 }

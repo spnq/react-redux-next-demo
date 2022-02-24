@@ -20,7 +20,7 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["components", "pages", "hooks", "store", "global.d.ts"],
+  "include": ["components", "pages", "hooks", "store", "global.d.ts", "../utils"],
   "exclude": [
     "node_modules"
   ]
