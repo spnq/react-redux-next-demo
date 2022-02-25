@@ -7,7 +7,7 @@ export const useLoader = (
 	handleStart = () => NProgress.start(),
 	handleComplete = () => NProgress.done(),
 	handleError = () => NProgress.done()
-) => {
+): string[] => {
 	const router = useRouter();
 
 	useEffect(() => {
