@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .next
+.vscode/launch.json
+firebase-adminsdk.json

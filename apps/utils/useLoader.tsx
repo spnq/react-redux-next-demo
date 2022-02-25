@@ -2,12 +2,12 @@ import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import NProgress from 'nprogress';
 
-export const useRAT = (
+export const useLoader = (
 	isActive = true,
 	handleStart = () => NProgress.start(),
 	handleComplete = () => NProgress.done(),
 	handleError = () => NProgress.done()
-) => {
+): string[] => {
 	const router = useRouter();
 
 	useEffect(() => {

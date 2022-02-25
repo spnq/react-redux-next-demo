@@ -3,6 +3,9 @@ module.exports = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	experimental: {
+    	externalDir: true,
+  	},
 	async rewrites() {
 		return [
 			{
