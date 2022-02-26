@@ -20,7 +20,7 @@ export const CardDisplayList = ({ card } : { card: ICard}): JSX.Element => {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Link href={`/card/${card.id}`}>
+				<Link prefetch={false} href={`/card/${card.id}`}>
 					<Button variant='contained' size="small">Learn More</Button>
 				</Link>
 			</CardActions>

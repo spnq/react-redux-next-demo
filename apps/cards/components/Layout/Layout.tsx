@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MailIcon from '@mui/icons-material/Mail';
-import {SearchRounded} from '@mui/icons-material';
+import SearchRounded from '@mui/icons-material/SearchRounded';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
