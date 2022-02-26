@@ -17,9 +17,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<Provider store={store}>
 			<Layout>
-				<Head>
-					<link rel="icon" type="image/png" href="https://nextjs.org/static/favicon/favicon.ico" />
-				</Head>
 				<Component {...pageProps} />
 			</Layout>
 		</Provider>
