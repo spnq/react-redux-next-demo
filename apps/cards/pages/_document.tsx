@@ -1,4 +1,4 @@
-import {Document as DefDoc} from '../../utils/default_document';
+import {Document as DefDoc} from '@defaults/document';
 
 export default function Document() {
 	return (

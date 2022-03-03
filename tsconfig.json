@@ -6,6 +6,12 @@
       "dom.iterable",
       "esnext"
     ],
+	"baseUrl": ".",
+	"paths": {
+		"@aws-lib/*": ["visual-libs/awesome-lib/*"],
+		"@defaults/*": ["libs/defaults/*"],
+		"@utils/*": ["libs/utils/*"]
+	},
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

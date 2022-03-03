@@ -4,8 +4,8 @@ import '../styles/global.css';
 import '../styles/nprogress.css';
 import Layout from '../components/Layout/Layout';
 import {useStore} from '../store/store';
-import {useLoader} from '../../utils/useLoader';
-import {updateRatIfNeeded} from '../../utils/updateRatIfNeeded';
+import {useLoader} from '@utils/useLoader';
+import {updateRatIfNeeded} from '@utils/updateRatIfNeeded';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const store = useStore(pageProps.initialReduxState);
