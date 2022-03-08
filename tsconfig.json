@@ -6,6 +6,12 @@
       "dom.iterable",
       "esnext"
     ],
+	"baseUrl": ".",
+	"paths": {
+		"@aws-lib/*": ["visual-libs/awesome-lib/*"],
+		"@defaults/*": ["libs/defaults/*"],
+		"@utils/*": ["libs/utils/*"]
+	},
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,7 +24,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+	"incremental":true
   },
   "exclude": [
     "node_modules"
