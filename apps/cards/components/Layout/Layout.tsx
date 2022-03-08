@@ -20,10 +20,10 @@ import {setNotifications} from '../../store/notifications/actions';
 import {toggleDarkMode} from '../../store/dark-mode/actions';
 import useFirebaseAuth from '../../hooks/useFirebase';
 
-function Layout({children}: {children: React.ReactNode}) {
+function Layout({children}: {children: React.ElementType}) {
 	const notifications = useSelector((state: RootState) => state.notifications);
-	const [anchorEl, setAnchorEl] = useState<EventTarget & Element | null>(null);
-	const [search, setSearch] = useState('');
+	const [ anchorEl, setAnchorEl ] = useState<EventTarget & Element | null>(null);
+	const [ search, setSearch ] = useState('');
 	const {signOutWrapper} = useFirebaseAuth();
 	const isDarkMode = useSelector((state: RootState) => state.isDarkMode);
 	const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function Layout({children}: {children: React.ReactNode}) {
 				mode: isDarkMode ? 'dark' : 'light'
 			},
 		}),
-	[isDarkMode],
+	[ isDarkMode ],
 	);
 
 	const handleClose = () => {
@@ -50,12 +50,14 @@ function Layout({children}: {children: React.ReactNode}) {
 	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value);
 	};
-	const handleKeyDown = (event:  KeyboardEvent<HTMLImageElement>) => {
+	const handleKeyDown = (event: KeyboardEvent<HTMLImageElement>) => {
 		if (event.key === 'Enter') {
-			Router.push({pathname: '/search', query: {
-				title: search,
-				page: 1
-			}});
+			Router.push({
+				pathname: '/search', query: {
+					title: search,
+					page: 1
+				}
+			});
 		}
 	};
 
@@ -65,99 +67,97 @@ function Layout({children}: {children: React.ReactNode}) {
 		const docsRef = query(notificationCollection);
 		const unsubscribe = onSnapshot(docsRef, (snapshot) => {
 			const data = snapshot.docs.map(doc => doc.data());
-			dispatch(setNotifications([...data]));
+			dispatch(setNotifications([ ...data ]));
 		});
 
 		return unsubscribe;
-	}, [dispatch]);
+	}, [ dispatch ]);
 
-	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline />
-			<AppBar position="static">
-				<Container maxWidth="xl">
-					<Toolbar disableGutters>
-						<Typography
-							variant="h6"
-							noWrap
-							component="div"
-							sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+	return (<ThemeProvider theme={theme}>
+		<CssBaseline />
+		<AppBar position="static">
+			<Container maxWidth="xl">
+				<Toolbar disableGutters>
+					<Typography
+						variant="h6"
+						noWrap
+						component="div"
+						sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
+					>
+						DEMO
+					</Typography>
+					<Box sx={{flexGrow: 1, alignItems: 'center', display: {xs: 'none', md: 'flex'}}}>
+						<Button onClick={() => Router.push({pathname: '/'})} style={{margin: '12px'}} variant='contained'>HOME</Button>
+						<Button onClick={() => Router.push({pathname: '/submit-form'})} variant='contained'>CREATE</Button>
+					</Box>
+					<Box sx={{flexGrow: 1, alignItems: 'center', display: {xs: 'none', md: 'flex'}}}>
+						<Button onClick={() => Router.push({pathname: '/login'})} style={{margin: '12px'}} variant='contained'>LOGIN</Button>
+						<Button onClick={signOutWrapper} variant='contained'>SIGN OUT</Button>
+					</Box>
+
+					<Box>
+						<TextField
+							variant="standard"
+							value={search}
+							onKeyDown={handleKeyDown}
+							onChange={handleSearch}
+							size="medium"
+							style={{
+								marginRight: '8px'
+							}}
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<SearchRounded />
+									</InputAdornment>
+								),
+							}}
+						/>
+					</Box>
+
+					<Box sx={{flexGrow: 0}}>
+						<Tooltip title="Notification">
+							<IconButton onClick={handleOpenPopOver} sx={{p: 0}}>
+								<Badge badgeContent={notifications.length} color="primary">
+									<MailIcon color="action" />
+								</Badge>
+							</IconButton>
+						</Tooltip>
+						<Popover
+							id={id}
+							open={open}
+							anchorEl={anchorEl}
+							onClose={handleClose}
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'left',
+							}}
+							style={{
+								minHeight: '100%'
+							}}
 						>
-							DEMO
-						</Typography>
-						<Box sx={{ flexGrow: 1, alignItems: 'center' ,display: { xs: 'none', md: 'flex' } }}>
-							<Button onClick={() => Router.push({pathname: '/'})} style={{margin: '12px'}} variant='contained'>HOME</Button>
-							<Button onClick={() => Router.push({pathname: '/submit-form'})} variant='contained'>CREATE</Button>
-						</Box>
-						<Box sx={{ flexGrow: 1, alignItems: 'center' ,display: { xs: 'none', md: 'flex' } }}>
-							<Button onClick={() => Router.push({pathname: '/login'})} style={{margin: '12px'}} variant='contained'>LOGIN</Button>
-							<Button onClick={signOutWrapper} variant='contained'>SIGN OUT</Button>
-						</Box>
-
-						<Box>
-							<TextField 
-								variant="standard"
-								value={search} 
-								onKeyDown={handleKeyDown} 
-								onChange={handleSearch}
-								size="medium"
-								style={{
-									marginRight: '8px'
-								}}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<SearchRounded />
-										</InputAdornment>
-									),
-								}}
-							/>
-						</Box>
-
-						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title="Notification">
-								<IconButton onClick={handleOpenPopOver} sx={{ p: 0 }}>
-									<Badge badgeContent={notifications.length} color="primary">
-										<MailIcon color="action" />
-									</Badge>
-								</IconButton>
-							</Tooltip>
-							<Popover
-								id={id}
-								open={open}
-								anchorEl={anchorEl}
-								onClose={handleClose}
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'left',
-								}}
-								style={{
-									minHeight: '100%'
-								}}
-							>
-								<Paper elevation={3} sx={
-									{
-										display: 'block',
-										overflow: 'auto'
-									}
-								}>
-									{notifications && notifications.map(notification => 
-										<Paper elevation={3} style={{padding: '12px', margin: '20px'}} key={notification.id}>{notification.message}</Paper>
-									)}
-								</Paper>
-							</Popover>
-						</Box>
-						<Box>
-							<Switch checked={isDarkMode} onChange={handleToggle} />
-						</Box>
-					</Toolbar>
-				</Container>
-			</AppBar>
-			<main>
-				{children}
-			</main>
-		</ThemeProvider>
-	);
+							<Paper elevation={3} sx={
+								{
+									display: 'block',
+									overflow: 'auto'
+								}
+							}>
+								{notifications && notifications.map(notification =>
+									<Paper elevation={3} style={{padding: '12px', margin: '20px'}} key={notification.id}>{notification.message}</Paper>
+								)}
+							</Paper>
+						</Popover>
+					</Box>
+					<Box>
+						<Switch checked={isDarkMode} onChange={handleToggle} />
+					</Box>
+				</Toolbar>
+			</Container>
+		</AppBar>
+		<main>
+			{children}
+		</main>
+	</ThemeProvider>);
 }
 
 export default Layout;

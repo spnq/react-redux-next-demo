@@ -1,24 +1,19 @@
-import {AppProps} from 'next/dist/shared/lib/router/router';
-import {Provider} from 'react-redux';
+import {AppProps} from 'next/app';
 import '../styles/global.css';
 import '../styles/nprogress.css';
 import Layout from '../components/Layout/Layout';
 import {useStore} from '../store/store';
-import {useLoader} from '@utils/useLoader';
-import {updateRatIfNeeded} from '@utils/updateRatIfNeeded';
+import {DefMyApp} from '@defaults/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const store = useStore(pageProps.initialReduxState);
-
-	useLoader();
-	updateRatIfNeeded();
-
 	return (
-		<Provider store={store}>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
-		</Provider>
+		<DefMyApp 
+			Component={Component}
+			pageProps={pageProps}
+			Layout={Layout}
+			store={store} 
+		/>
 	);
 }
 
