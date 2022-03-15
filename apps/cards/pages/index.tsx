@@ -14,6 +14,8 @@ import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
 import {AwesomeButton} from '../../../visual-libs/awesome-lib/button';
+import Image from 'next/image';
+import img from '../public/pic.png';
 
 const LIMIT = 3;
 
@@ -30,6 +32,7 @@ export default function Home (): JSX.Element {
 			</Head>
 			<Typography variant="h2" component="h2">
 				All Cards
+				<Image src={img} width={100} height={100}/>
 			</Typography>
 			<div style={{
 				display: 'flex',

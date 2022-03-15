@@ -1,9 +1,8 @@
 import {Card, CardContent, Typography} from '@mui/material';
 import React from 'react';
-import styles from '../styles/App.module.css';
 
 function Home() {
-	return <div className={styles.App}>
+	return <div>
 		{
 			<Card sx={{minWidth: 275, maxWidth: 800}}>
 				<CardContent>
@@ -23,13 +22,6 @@ function Home() {
 			</Card>
 		}
 	</div>;
-}
-
-export async function getServerSideProps() {
-
-	return {
-		props: {}
-	};
 }
 
 export default Home;
