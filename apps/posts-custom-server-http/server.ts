@@ -4,7 +4,6 @@ import * as reactDom from 'react-dom/server';
 
 const port = 3000;
 
-
 const requestListener = function (req: IncomingMessage, res: ServerResponse) {
 	res.writeHead(200);
 	reactDom.renderToNodeStream(page()).pipe(res);
