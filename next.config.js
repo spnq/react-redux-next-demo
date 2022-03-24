@@ -14,13 +14,13 @@ const baseFileLoaderRule = (options = {}) => ({
 });
 
 const baseCssLoaderRule = (options = {}) => ({
-		loader: "css-loader",
-		options: {
-			modules: {
-				localIdentName: '[local]_[hash:base64:5]',
-				...options
-			},
+	loader: "css-loader",
+	options: {
+		modules: {
+			localIdentName: '[local]_[hash:base64:5]',
+			...options
 		},
+	},
 });
 
 module.exports = {
@@ -43,7 +43,7 @@ module.exports = {
 					baseCssLoaderRule(),
 					"less-loader",
 				],
-			}, baseFileLoaderRule() )
+			}, baseFileLoaderRule())
 		} else {
 			config.module.rules.unshift({
 				test: /\.(less|css)$/,
@@ -51,10 +51,12 @@ module.exports = {
 					baseCssLoaderRule({
 						exportOnlyLocals: true,
 						exportLocalsConvention: 'camelCase',
-					}), 
+					}),
 					"less-loader"
 				],
-			}, baseFileLoaderRule({emitFile: false}) )
+			}, baseFileLoaderRule({
+				emitFile: false
+			}))
 		}
 		return config
 	},

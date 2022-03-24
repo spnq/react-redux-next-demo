@@ -1,6 +1,7 @@
-import img from './png-transparent-pink-paint-illustration-ink-brush-pen-red-hair-brush-purple-ink-text.png';
+
+import img from './random.jpeg';
 import styles from './biba.less';
-import Image from 'next/image';
+import {Image} from '@defaults/image';
 
 export function AwesomeButton() {
 	return (

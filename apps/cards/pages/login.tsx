@@ -54,3 +54,11 @@ function Login() {
 }
 
 export default Login;
+
+export async function getStaticProps() {
+	return {
+		props: {
+			biba: 'boba'
+		}
+	};
+}

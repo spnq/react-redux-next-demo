@@ -14,7 +14,7 @@ import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
 import {AwesomeButton} from '../../../visual-libs/awesome-lib/button';
-import Image from 'next/image';
+import {Image} from '@defaults/image';
 import img from '../public/pic.png';
 
 const LIMIT = 3;
@@ -32,8 +32,10 @@ export default function Home (): JSX.Element {
 			</Head>
 			<Typography variant="h2" component="h2">
 				All Cards
-				<Image src={img} width={100} height={100}/>
 			</Typography>
+			<Image src={img} width={100} height={100}/>
+			<Image src={'https://picsum.photos/200'} width={100} height={100}/>
+			<Image src={'https://picsum.photos/200'} width={100} height={100}/>
 			<div style={{
 				display: 'flex',
 				flexWrap: 'wrap'
