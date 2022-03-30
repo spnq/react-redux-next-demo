@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
-import { createStore, applyMiddleware, combineReducers, Store } from 'redux';
-import thunk from 'redux-thunk';
+import { Store } from 'redux';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {cardsReducer} from './cards/cardsReducer';
 import {updateNotificationsReducer} from './notifications/notificationsReducer';
 import {updatePageReducer} from './page/pageReducer';
 import {updateThemeReducer} from './dark-mode/darkModeReducer';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import {ActionsType} from '.';
 import {searchReducer} from './search/searchReducer';
 
@@ -22,10 +21,12 @@ export type RootState = ReturnType<typeof rootReducer>
 let store: Store<RootState, ActionsType> | undefined;
 
 function initStore(initialState: RootState): Store<RootState, ActionsType> {
-	return createStore(
-		rootReducer,
-		initialState,
-		composeWithDevTools(applyMiddleware(thunk))
+	return configureStore(
+		{
+			reducer: rootReducer,
+			devTools: process.env.NODE_ENV !== 'production',
+			preloadedState: initialState
+		}
 	);
 }
 

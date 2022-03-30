@@ -1,25 +1,26 @@
 import {Button, Card, CardActions, CardContent, TextField} from '@mui/material';
-import {addDoc} from 'firebase/firestore';
 import {FormEvent, useState} from 'react';
 import Router from 'next/router';
 import Head from 'next/head';
-import {cardsCollection} from '../firebase';
 
-export default function SubmitForm (): JSX.Element {
-	const [title, setTitle] = useState('');
-	const [description, setDescription] = useState('');
+export default function SubmitForm(): JSX.Element {
+	const [ title, setTitle ] = useState('');
+	const [ description, setDescription ] = useState('');
 
-	const handleSubmit = (e: FormEvent): void => {
+	const handleSubmit = async (e: FormEvent): Promise<void> => {
 		e.preventDefault();
 		const generateId = () => {
 			return new Date().getTime();
 		};
-		addDoc(cardsCollection, {title, description, id: generateId()});
-		Router.push({
-			pathname: '/'
-		});
+		await fetch('/api/submit-form', {
+			method: 'POST',
+			body: JSON.stringify({title, description, id: generateId()}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(() => Router.push({pathname: '/'})).catch(error => console.log(error));
 	};
-  
+
 
 	return (
 		<div style={{
@@ -31,7 +32,7 @@ export default function SubmitForm (): JSX.Element {
 				<meta property="og:title" content="Page title" key="title" />
 			</Head>
 			<h2>Create</h2>
-			<Card sx={{ minWidth: 275 }}>
+			<Card sx={{minWidth: 275}}>
 				<form onSubmit={handleSubmit}>
 					<CardContent style={{flexDirection: 'column'}}>
 						<div style={{
