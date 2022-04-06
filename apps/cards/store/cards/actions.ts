@@ -4,6 +4,7 @@ import {cardsCollection} from '../../firebase';
 import {CURRENT_CARDS_LOADED, TOTAL_CARDS_COUNTER_LOADED} from '../actionTypes';
 import {RootState} from '../store';
 import {CurrentCardsUpdateAction, ICard, TotalCardsUpdateAction} from './types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 const LIMIT = 3;
 
@@ -21,3 +22,7 @@ export const getTotalCards = (): ThunkAction<void,RootState, unknown, TotalCards
 	const total = await (await getDocs(cardsCollection)).docs.length;
 	dispatch({type: TOTAL_CARDS_COUNTER_LOADED, total});
 };
+
+// export const getTotalCards = createApi({
+
+// });

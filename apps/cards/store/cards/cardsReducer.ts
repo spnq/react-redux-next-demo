@@ -1,3 +1,4 @@
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ActionsType} from '..';
 import {ICardsState} from './types';
 
@@ -19,3 +20,17 @@ export const cardsReducer = (state: ICardsState = {current: [], total: 0}, actio
 		return {...state};
 	}
 };
+
+const initialState = {current: [], total: 0};
+
+const cardsSlice = createSlice({
+	name: 'cards',
+	initialState,
+	reducers: {
+		CURRENT_CARDS_LOADED: {
+			reducer: (state, action: PayloadAction<ActionsType>) => {
+				return {...state, current: [...action.payload.cards]};
+			}
+		}
+	}
+});
