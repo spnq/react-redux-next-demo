@@ -28,6 +28,10 @@ module.exports = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	i18n: {
+		locales: ['en', 'fr'],
+		defaultLocale: 'en',
+	},
 	webpack5: false,
 	experimental: {
 		externalDir: true,

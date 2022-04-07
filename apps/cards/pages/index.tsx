@@ -13,14 +13,26 @@ import {ThunkDispatch} from 'redux-thunk';
 import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
 import {setDarkMode} from '../store/dark-mode/actions';
+import Link from 'next/link';
+import {useRouter} from 'next/router';
 
 const LIMIT = 3;
 
+const content = {
+	en: {
+		title: 'Your News'
+	},
+	fr: {
+		title: 'Vos nouvelles'
+	},
+};
 
 export default function Home (): JSX.Element {
 	const {currentPage} : IPage = useSelector((state: RootState) => state.page);
 	const {current: cards, total} : ICardsState = useSelector((state: RootState) => state.cards);
 	const dispatch = useDispatch();
+	const router = useRouter();
+	const {locale} = useRouter();
 
 	return (
 		<div className={styles.App}>
@@ -30,6 +42,12 @@ export default function Home (): JSX.Element {
 			<Typography variant="h2" component="h2">
 				All Cards
 			</Typography>
+			<Button variant="contained" onClick={() => router.push('/', '/', { locale: 'fr' })}>
+				Fr
+			</Button>
+			{router.locale}
+			{/* {content[router.locale].title} */}
+			{content && locale && content[locale as 'fr' | 'en'].title}
 			<div style={{
 				display: 'flex',
 				flexWrap: 'wrap'
