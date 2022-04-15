@@ -4,7 +4,7 @@ import Router from 'next/router';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {CardDisplayList, ICard} from '../../components/CardDisplayList/CardDisplayList';
+import {CardDisplayList, ICard} from '../../components/card-display-list/CardDisplayList';
 import {loadNewSearchPage} from '../../store/search/actions';
 import {SearchAction} from '../../store/search/types';
 import {initializeStore, RootState} from '../../store/store';

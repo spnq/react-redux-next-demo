@@ -1,6 +1,5 @@
 import {AppProps} from 'next/app';
 import {Provider} from 'react-redux';
-import {useLoader} from '../../../libs/utils/useLoader';
 import {updateRatIfNeeded} from '../../../libs/utils/updateRatIfNeeded';
 import {Store} from 'redux';
 
@@ -10,8 +9,6 @@ export interface DeffAppProps extends Omit<AppProps, 'router'> {
 } 
 
 export function DefMyApp({ Component, pageProps, store, Layout}: DeffAppProps) {
-
-	useLoader();
 	updateRatIfNeeded();
 
 	return (

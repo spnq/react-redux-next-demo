@@ -19,6 +19,7 @@ import {RootState} from '../../store/store';
 import {setNotifications} from '../../store/notifications/actions';
 import {toggleDarkMode} from '../../store/dark-mode/actions';
 import useFirebaseAuth from '../../hooks/useFirebase';
+import styles from './Layout.module.less';
 
 function Layout({children}: {children: React.ElementType}) {
 	const notifications = useSelector((state: RootState) => state.notifications);
@@ -75,23 +76,23 @@ function Layout({children}: {children: React.ElementType}) {
 
 	return (<ThemeProvider theme={theme}>
 		<CssBaseline />
-		<AppBar position="static">
+		<AppBar position="static" className={styles.AppBar}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<Typography
+						className={styles.brand}
 						variant="h6"
 						noWrap
 						component="div"
-						sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
 					>
 						DEMO
 					</Typography>
-					<Box sx={{flexGrow: 1, alignItems: 'center', display: {xs: 'none', md: 'flex'}}}>
-						<Button onClick={() => Router.push({pathname: '/'})} style={{margin: '12px'}} variant='contained'>HOME</Button>
-						<Button onClick={() => Router.push({pathname: '/submit-form'})} variant='contained'>CREATE</Button>
+					<Box className={styles.box}>
+						<Button onClick={() => Router.push({pathname: '/'})} variant='contained'>HOME</Button>
+						<Button onClick={() => Router.push({pathname: '/create'})} variant='contained'>CREATE</Button>
 					</Box>
-					<Box sx={{flexGrow: 1, alignItems: 'center', display: {xs: 'none', md: 'flex'}}}>
-						<Button onClick={() => Router.push({pathname: '/login'})} style={{margin: '12px'}} variant='contained'>LOGIN</Button>
+					<Box className={styles.box}>
+						<Button onClick={() => Router.push({pathname: '/login'})} variant='contained'>LOGIN</Button>
 						<Button onClick={signOutWrapper} variant='contained'>SIGN OUT</Button>
 					</Box>
 
@@ -101,10 +102,8 @@ function Layout({children}: {children: React.ElementType}) {
 							value={search}
 							onKeyDown={handleKeyDown}
 							onChange={handleSearch}
+							className={styles.search}
 							size="medium"
-							style={{
-								marginRight: '8px'
-							}}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -115,9 +114,9 @@ function Layout({children}: {children: React.ElementType}) {
 						/>
 					</Box>
 
-					<Box sx={{flexGrow: 0}}>
+					<Box className={styles.notification}>
 						<Tooltip title="Notification">
-							<IconButton onClick={handleOpenPopOver} sx={{p: 0}}>
+							<IconButton onClick={handleOpenPopOver}>
 								<Badge badgeContent={notifications.length} color="primary">
 									<MailIcon color="action" />
 								</Badge>
@@ -132,18 +131,11 @@ function Layout({children}: {children: React.ElementType}) {
 								vertical: 'bottom',
 								horizontal: 'left',
 							}}
-							style={{
-								minHeight: '100%'
-							}}
+							className={styles.popover}
 						>
-							<Paper elevation={3} sx={
-								{
-									display: 'block',
-									overflow: 'auto'
-								}
-							}>
+							<Paper elevation={3} className={styles.paperOuter}>
 								{notifications && notifications.map(notification =>
-									<Paper elevation={3} style={{padding: '12px', margin: '20px'}} key={notification.id}>{notification.message}</Paper>
+									<Paper className={styles.paperInner} elevation={3} key={notification.id}>{notification.message}</Paper>
 								)}
 							</Paper>
 						</Popover>

@@ -1,5 +1,6 @@
 import {Card, CardContent, Typography, CardActions, Button} from '@mui/material';
 import Link from 'next/link';
+import styles from './CardDisplayList.module.less';
 
 export interface ICard {
   id?: number | string;
@@ -9,9 +10,9 @@ export interface ICard {
 
 export const CardDisplayList = ({ card } : { card: ICard}): JSX.Element => {
 	return (
-		<Card sx={{width: 275, margin: 8}}>
-			<CardContent>
-				<Typography sx={{fontSize: 14}} color="text.primary" gutterBottom>
+		<Card className={styles.card}>
+			<CardContent className={styles.content}>
+				<Typography color="text.primary" gutterBottom>
 					{card.title}
 				</Typography>
 				<Typography variant="body2">

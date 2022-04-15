@@ -1,4 +1,4 @@
-import {ICard} from '../../components/CardDisplayList/CardDisplayList';
+import {ICard} from '../../components/card-display-list/CardDisplayList';
 import {CURSORS_UPDATED, CURRENT_PAGE_UPDATED, NEXT_PAGE_SELECTED, PREVIOUS_PAGE_SELECTED} from '../actionTypes';
 
 

@@ -1,7 +1,6 @@
 import {AppProps} from 'next/app';
 import '../styles/global.css';
-import '../styles/nprogress.css';
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/layout/Layout';
 import {useStore} from '../store/store';
 import {DefMyApp} from '@defaults/app';
 

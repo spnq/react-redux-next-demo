@@ -1,44 +1,19 @@
-import {Button, Paper, TextField, Typography} from '@mui/material';
+import { CardPage } from '../../components/pages/card/CardPage';
 import {cardsCollection} from '../../firebase';
 import {getDocs, where, query} from 'firebase/firestore';
-import {useRouter} from 'next/router';
-import {ICard} from '../../components/CardDisplayList/CardDisplayList';
+import {ICard} from '../../components/card-display-list/CardDisplayList';
 import Head from 'next/head';
 import {AppProps} from 'next/dist/shared/lib/router/router';
-import styles from './Card.module.css';
 
-export default function CardPage ({title, description} : AppProps) {
-	const router = useRouter();
+export default function Card ({title, description} : AppProps) {
 
 	return (
-		<div className={styles.card}>
+		<>
 			<Head>
 				<title>aboba</title>
 			</Head>
-			{ description &&
-			<Paper sx={{ minWidth: 350, minHeight: 250, padding: 8 }} elevation={3}>
-				<Typography variant="h3" component="h3">
-					{title}
-				</Typography>
-				<div style={{
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'space-evenly',
-					minHeight: '250px',
-					marginBottom: '10px'
-				}}>
-					<TextField disabled value={title} label="Title" variant="outlined" />
-					<TextField disabled value={description} label="Description" variant="outlined" />
-				</div>
-				<div style={{
-					display: 'flex',
-					justifyContent: 'space-evenly'
-				}}>
-					<Button variant="contained" onClick={() => router.push({pathname: '/'})} >BACK</Button>
-				</div>
-			</Paper>
-			}
-		</div>
+			{ description && title && <CardPage title={title} description={description} /> }
+		</>
 	);
 }
 

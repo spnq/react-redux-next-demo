@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {collection, CollectionReference, DocumentData, getFirestore} from 'firebase/firestore';
-import {ICard} from './components/CardDisplayList/CardDisplayList';
+import {ICard} from './components/card-display-list/CardDisplayList';
 import {INotification} from './store/notifications/types';
 
 const firebaseConfig = {
