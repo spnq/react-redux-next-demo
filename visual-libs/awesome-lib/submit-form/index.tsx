@@ -1,8 +1,9 @@
 import {Typography, Card, CardContent, CardActions, Button} from '@mui/material';
 import {FormEvent} from 'react';
-import styles from './Submit-form.less';
+import {StackedInputs} from 'visual-libs/structure';
+import styles from './submit-form.less';
 
-export default function SubmitForm(
+export function SubmitForm(
 	{handleSubmit, title, actionName, children}: 
 	{handleSubmit: (e: FormEvent) => void, title: string, actionName: string, children: JSX.Element[]}
 ) {
@@ -14,9 +15,9 @@ export default function SubmitForm(
 			<Card className={styles.card}>
 				<form onSubmit={handleSubmit}>
 					<CardContent className={styles.cardContent}>
-						<div className={styles.inputs}>
+						<StackedInputs>
 							{children}
-						</div>
+						</StackedInputs>
 						<CardActions>
 							<Button type='submit' variant="contained">{actionName.toUpperCase()}</Button>
 						</CardActions>

@@ -1,14 +1,15 @@
-import {RootState, initializeStore} from '../store/store';
-import Head from 'next/head';
-import {getCards, getTotalCards} from '../store/cards/actions';
-import {setCursors, setCurrentPage} from '../store/page/actions';
-import {ThunkDispatch} from 'redux-thunk';
-import {ActionsType} from '../store';
 import {GetServerSidePropsContext} from 'next';
-import {setDarkMode} from '../store/dark-mode/actions';
-import Root from '../components/pages/root/Root';
+import Head from 'next/head';
+import {ThunkDispatch} from 'redux-thunk';
+// import {setCursors, setCurrentPage} from '../store/page/actions';
+// import {setDarkMode} from '../store/dark-mode/actions';
+import Root from '../components/pages/root/root';
+import {ActionsType} from '../store';
+import {CURRENT_CARDS_LOADED} from '../store/actionTypes';
+import {setCurrentPage} from '../store/page/actions';
+import {initializeStore, RootState} from '../store/store';
 
-export default function Home (): JSX.Element {
+export default function Home(): JSX.Element {
 	return (
 		<>
 			<Head>
@@ -25,9 +26,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 	const isFirstRender: boolean = !ctx?.req?.url?.includes('.json') || false;
 
 	if (isFirstRender) {
-		await Promise.all(
-			[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards()),dispatch(setDarkMode())]
-		);
+		const req = await fetch('https://my-json-server.typicode.com/spnq/fake-api/cards');
+		const cards = await req.json();
+		dispatch({type: CURRENT_CARDS_LOADED, cards});
 		dispatch(setCurrentPage(1));
 		return {
 			props: {
@@ -39,9 +40,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 			}
 		};
 	} else {
-		await Promise.all(
-			[dispatch(setCursors()), dispatch(getCards()), dispatch(getTotalCards())]
-		);
+		const req = await fetch('https://my-json-server.typicode.com/spnq/fake-api/cards');
+		const cards = await req.json();
+		dispatch({type: CURRENT_CARDS_LOADED, cards});
 		dispatch(setCurrentPage(1));
 		return {
 			props: {
@@ -51,6 +52,4 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 				}
 			}
 		};
-	}
-
-}
+	}}

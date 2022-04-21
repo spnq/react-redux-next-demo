@@ -1,4 +1,4 @@
-import {ICard} from '../../components/card-display-list/CardDisplayList';
+import {ICard} from 'visual-libs/awesome-lib';
 import {CURSORS_UPDATED, CURRENT_PAGE_UPDATED, NEXT_PAGE_SELECTED, PREVIOUS_PAGE_SELECTED} from '../actionTypes';
 
 

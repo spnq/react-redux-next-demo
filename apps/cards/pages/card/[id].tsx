@@ -1,9 +1,7 @@
-import { CardPage } from '../../components/pages/card/CardPage';
-import {cardsCollection} from '../../firebase';
-import {getDocs, where, query} from 'firebase/firestore';
-import {ICard} from '../../components/card-display-list/CardDisplayList';
+import { CardPage } from '../../components/pages/card/card-page';
 import Head from 'next/head';
 import {AppProps} from 'next/dist/shared/lib/router/router';
+import {getData} from '../api/fake/cards/[id]';
 
 export default function Card ({title, description} : AppProps) {
 
@@ -20,14 +18,11 @@ export default function Card ({title, description} : AppProps) {
 // SSR
 // get on every request
 export async function getServerSideProps({params}: {params: {id : string}}) {
-	const docRef = query(cardsCollection, where('id', '==', parseInt(params.id)));
-	const document = await getDocs(docRef);
-	const nextPage = await (await getDocs(query(cardsCollection, where('id', '==', 2)))).docs[0].data();
-	const data = await document.docs[0].data() as ICard;
+	const data = getData(parseInt(params.id));
+	
 	return {
 		props: {
 			title: data.title,
-			nextPage,
 			description: data.description
 		}
 	};

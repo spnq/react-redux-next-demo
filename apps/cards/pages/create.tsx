@@ -1,4 +1,4 @@
-import { CreatePage } from '../components/pages/create/Create';
+import { CreatePage } from '../components/pages/create/create';
 import Head from 'next/head';
 
 export default function Create(): JSX.Element {

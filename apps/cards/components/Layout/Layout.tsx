@@ -13,19 +13,15 @@ import React, {MouseEvent, useEffect, useState, KeyboardEvent, useMemo} from 're
 import Router from 'next/router';
 import {Badge, IconButton, InputAdornment, Paper, Popover, TextField, Switch, createTheme, ThemeProvider} from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
-import {notificationCollection} from '../../firebase';
-import {query, onSnapshot} from 'firebase/firestore';
 import {RootState} from '../../store/store';
-import {setNotifications} from '../../store/notifications/actions';
-import {toggleDarkMode} from '../../store/dark-mode/actions';
-import useFirebaseAuth from '../../hooks/useFirebase';
-import styles from './Layout.module.less';
+// import {setNotifications} from '../../store/notifications/actions';
+import {setDarkMode, toggleDarkMode} from '../../store/dark-mode/actions';
+import styles from './layout.module.less';
 
 function Layout({children}: {children: React.ElementType}) {
 	const notifications = useSelector((state: RootState) => state.notifications);
 	const [ anchorEl, setAnchorEl ] = useState<EventTarget & Element | null>(null);
 	const [ search, setSearch ] = useState('');
-	const {signOutWrapper} = useFirebaseAuth();
 	const isDarkMode = useSelector((state: RootState) => state.isDarkMode);
 	const dispatch = useDispatch();
 	const theme = useMemo(() =>
@@ -36,6 +32,10 @@ function Layout({children}: {children: React.ElementType}) {
 		}),
 	[ isDarkMode ],
 	);
+
+	useEffect(() => {
+		dispatch(setDarkMode());
+	}, [dispatch]);
 
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -64,16 +64,6 @@ function Layout({children}: {children: React.ElementType}) {
 
 	const handleToggle = () => dispatch(toggleDarkMode());
 
-	useEffect(() => {
-		const docsRef = query(notificationCollection);
-		const unsubscribe = onSnapshot(docsRef, (snapshot) => {
-			const data = snapshot.docs.map(doc => doc.data());
-			dispatch(setNotifications([ ...data ]));
-		});
-
-		return unsubscribe;
-	}, [ dispatch ]);
-
 	return (<ThemeProvider theme={theme}>
 		<CssBaseline />
 		<AppBar position="static" className={styles.AppBar}>
@@ -93,7 +83,7 @@ function Layout({children}: {children: React.ElementType}) {
 					</Box>
 					<Box className={styles.box}>
 						<Button onClick={() => Router.push({pathname: '/login'})} variant='contained'>LOGIN</Button>
-						<Button onClick={signOutWrapper} variant='contained'>SIGN OUT</Button>
+						<Button variant='contained'>SIGN OUT</Button>
 					</Box>
 
 					<Box>

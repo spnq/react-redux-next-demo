@@ -1,30 +1,28 @@
 
 import {TextField} from '@mui/material';
-import Router from 'next/router';
-import React, {FormEvent, useState} from 'react';
-import useFirebaseAuth from '../../../hooks/useFirebase';
-import SubmitForm from '../../submit-form/Submit-form';
+import {FormEvent, useState} from 'react';
+import {SubmitForm} from 'visual-libs/awesome-lib';
+// import Router from 'next/router';
 
 export function Login() {
 	const [ password, setPassword ] = useState('');
 	const [ email, setEmail ] = useState('');
 
-	const {signIn} = useFirebaseAuth();
 
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		signIn(email, password)
-			.then(authUser => {
-				console.log('Loged in');
-				console.log(authUser);
-				Router.push({pathname: '/'});
-			})
-			.catch(error => {
-				console.log(error.message);
-			});
-		console.log({password, email});
+		// signIn(email, password)
+		// 	.then(authUser => {
+		// 		console.log('Loged in');
+		// 		console.log(authUser);
+		// 		Router.push({pathname: '/'});
+		// 	})
+		// 	.catch(error => {
+		// 		console.log(error.message);
+		// 	});
+		// console.log({password, email});
 	};
 	return (
 

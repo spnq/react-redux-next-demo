@@ -1,7 +1,7 @@
 import {TextField} from '@mui/material';
 import Router from 'next/router';
 import {FormEvent, useState} from 'react';
-import SubmitForm from '../../submit-form/Submit-form';
+import {SubmitForm} from 'visual-libs/awesome-lib';
 
 export function CreatePage() {
 	const [ title, setTitle ] = useState('');
