@@ -1,7 +1,5 @@
-import {Document as DefDoc} from '@defaults/document';
+import DefDoc from '@defaults/document';
 
-export default function Document() {
-	return (
-		<DefDoc favicon={'https://nextjs.org/static/favicon/favicon.ico'}/>
-	);
+export default class Document extends DefDoc {
+	favicon = 'https://nextjs.org/static/favicon/favicon.ico';
 }

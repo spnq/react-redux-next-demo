@@ -3,5 +3,5 @@ declare module '*.less' {
   export = resource;
 }
 declare module '*.png';
-declare module '*.module.css';
+declare module '*.module.less';
 declare module '*.jpeg';
