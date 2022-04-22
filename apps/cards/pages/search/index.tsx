@@ -25,7 +25,7 @@ export async function getServerSideProps({query: {title, page}} : GetServerSideP
 	const store = initializeStore({} as RootState);
 	const { dispatch }: {dispatch: ThunkDispatch<RootState, unknown, ActionsType>} = store;
 
-	dispatch(loadNewSearchPage(page as string, title as string));
+	// dispatch(loadNewSearchPage(page as string, title as string));
 	return {
 		props: {
 			query: {title}
